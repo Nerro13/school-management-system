@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+</head>
+<body>
+    <!-- add headers here  -->
+    <h2>Registration Form</h2>
+    <div class="signings">
+        <form action="/sign-up" method="post">
+            <input type="text" name="first_name" id="first_name" placeholder="First Name" required>
+            <input type="text" name="second_name" id="second_name" placeholder="Second Name" required>
+            <input type="email" name="email" id="email" placeholder="email" required>
+            <input type="password" name="password" id="password" placeholder="Password" required>
+            <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" required>
+            <input type="submit" value="REGISTER">
+        <p>Already have an account? <a href="sign-in">Sign In</a></p>
+        </form>
+    </div>
+</body>
+</html>
