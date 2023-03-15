@@ -3,6 +3,7 @@ const app = express();
 const mysql = require("mysql");
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'))
 //creating connection to database
 const con = mysql.createConnection({
   host: "localhost",

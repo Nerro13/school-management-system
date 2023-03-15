@@ -1,4 +1,29 @@
+*{
+    margin:0px;
+    padding: 0px;
+}
+/* form{
+    margin: 10px auto;
+    max-width: 450px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+} */
 .page-one{
-    height: 100vh;
+    display: flex;
+    min-height: 100vh;
+    gap: 60px;
+}
+.bottom-section{
+    display: flex;
+    justify-content: space-around;
+}
+.bottom-section a{
+    text-decoration: none;
+    color: grey;
+}
+/*page two styles*/
+.cards{
+    display: flex;
     
 }
