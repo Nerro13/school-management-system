@@ -4,16 +4,25 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/home.css" />
     <title>Sign Up</title>
   </head>
   <body>
     <!-- add headers here  -->
+     <div class="top-nav">
+      <img src="./images/school-logo.webp" alt="" />
+      <nav>
+        <a href="/">HOME</a>
+        <a href="/sign-in">SIGN IN</a>
+      </nav>
+    </div>
     <%if(locals.error){%>
     <p style="color: red"><%=error%></p>
     <%}%>
     <h2>Registration Form</h2>
     <div class="signings">
       <form action="/sign-up" method="POST">
+        <label for="first_name">FIRST NAME</label>
         <input
           type="text"
           name="first_name"
@@ -21,6 +30,7 @@
           placeholder="First Name"
           required
         /><br />
+        <label for="second_name">SECOND NAME</label>
         <input
           type="text"
           name="second_name"
@@ -28,6 +38,7 @@
           placeholder="Second Name"
           required
         /><br />
+        <label for="email">EMAIL</label>
         <input
           type="email"
           name="email"
@@ -35,6 +46,7 @@
           placeholder="email"
           required
         /><br />
+        <label for="password">PASSWORD</label>
         <input
           type="password"
           name="password"
@@ -42,14 +54,26 @@
           placeholder="Password"
           required
         /><br />
+        <label for="confirm_password">CONFIRM PASSWORD</label>
         <input
           type="password"
           name="confirm_password"
-          id="confirm-password"
+          id="confirm_password"
           placeholder="Confirm Password"
           required
         /><br />
-        <input type="submit" value="REGISTER" />
+        <!-- <label for="role">Select Role</label><br />
+
+        <input type="radio" name="teacher" id="teacher" />
+        <label for="teacher">Teacher</label>
+        <input type="radio" name="student" id="student" />
+        <label for="student">Student</label> -->
+        <label for="role">Role</label>
+        <select name="role" id="role">
+          <option value="teacher" id="teacher">Teacher</option>
+          <option value="student" id="student">Student</option>
+        </select><br><br>
+        <input class="button" type="submit" value="REGISTER" /><br><br>
         <p>Already have an account? <a href="sign-in">Sign In</a></p>
       </form>
     </div>

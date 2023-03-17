@@ -3,7 +3,7 @@ const app = express();
 const mysql = require("mysql");
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'))
+app.use(express.static('puclic'))
 //creating connection to database
 const con = mysql.createConnection({
   host: "localhost",
@@ -76,6 +76,15 @@ app.post("/sign-up", (req, res) => {
     }
   );
 });
+app.post("/admin", (req,res)=>{
+  con.query("SELECT first_name,second_name,email FROM students", (error,results)=>{
+    if(error){
+      res.status(500).render("error")
+    }else{
+      res.render("admin", {students:results})
+    }
+  })
+})
 //start server and listen to port
 app.listen(3000, () => {
   console.log("Server listening on port");

@@ -1,16 +1,39 @@
 *{
     margin:0px;
     padding: 0px;
+    font-family: sans-serif;
 }
-/* form{
-    margin: 10px auto;
-    max-width: 450px;
-    padding: 20px;
+/*buttons*/
+.button{
+    width: max-content;
+    justify-content: center;
+    background-color: rgb(199, 194, 194);
     border: 1px solid black;
-    border-radius: 10px;
-} */
+}
+/*header styling*/
+.top-nav{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+.top-nav img{
+    width: 90px;
+    
+}
+.top-nav nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    
+}
+.top-nav nav a, .bottom-section a{
+   text-decoration: none;
+   color: grey;
+   font-weight: 400;
+}
 .page-one{
     display: flex;
+    flex-direction: column;
     min-height: 100vh;
     gap: 60px;
 }
@@ -18,12 +41,34 @@
     display: flex;
     justify-content: space-around;
 }
-.bottom-section a{
-    text-decoration: none;
-    color: grey;
+
+.mid-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 60px;
+    gap: 60px;
 }
 /*page two styles*/
 .cards{
     display: flex;
     
+}
+/*form styling*/
+.signings{
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+form{
+    border: 1px solid black;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    height: max-content;
+}
+input{
+    display: block;
+    width: 80%;
+    padding: 10px;
 }

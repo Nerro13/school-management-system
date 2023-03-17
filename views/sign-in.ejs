@@ -4,10 +4,17 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+    <link rel="stylesheet" href="./css/home.css" />
     <title>Sign In</title>
   </head>
   <body>
+    <div class="top-nav">
+      <img src="./images/school-logo.webp" alt="" />
+      <nav>
+        <a href="/">HOME</a>
+        <a href="/sign-up">SIGN UP</a>
+      </nav>
+    </div>
     <div class="signings">
       <form action="/sign-in" method="post">
         <label for="email"> Email</label><br />
@@ -19,7 +26,7 @@
           id="password"
           required
         /><br /><br />
-        <input type="submit" value="LOG IN">
+        <input class="button" type="submit" value="LOG IN" /><br><br>
         <p>Don't have an account? <a href="sign-up">Sign Up</a></p>
       </form>
     </div>
