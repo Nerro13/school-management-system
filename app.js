@@ -1,9 +1,20 @@
 const express = require("express");
+const session = require("express-session");
 const app = express();
 const mysql = require("mysql");
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('puclic'))
+app.use(express.static("puclic"));
+app.use(express.json())
+app.use(
+  session({
+    secret: "sern",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+// let teacher = true;
+
 //creating connection to database
 const con = mysql.createConnection({
   host: "localhost",
@@ -28,6 +39,30 @@ app.get("/about", (req, res) => {
 app.get("/sign-in", (req, res) => {
   res.render("sign-in");
 });
+//different page logic implemented on the sign in page
+// let role = con.query("SELECT role FROM students WHERE email = ?", [req.body.email])
+// console.log(role)
+let role = {
+  admin:'admin',
+  student:'student'
+}
+app.post("/sign-in", (req, res) => {
+    con.query("SELECT role FROM students WHERE email = ?", [req.body.email], (error, results)=>{
+    if(error){
+      res.status(500).render("error")
+    }else{
+      console.log((results[0].role))
+      console.log(role.admin)
+      // console.log(role)
+      if(results[0].role===role.admin){
+        res.render("admin")
+      }else{
+        res.render("home")
+      }
+    }
+  })
+  
+});
 app.get("/sign-up", (req, res) => {
   res.render("sign-up");
 });
@@ -48,12 +83,14 @@ app.post("/sign-up", (req, res) => {
           //if email doesnt exist, moves to check password and confirm password
           //here the passwords match and it moves to insert data in the database
           con.query(
-            "INSERT INTO students(first_name,second_name,email,password) VALUES(?,?,?,?)",
+            "INSERT INTO students(user_id,first_name,second_name,email,password,role) VALUES(?,?,?,?,?,?)",
             [
+              req.body.user_id,
               req.body.first_name,
               req.body.second_name,
               req.body.email,
               req.body.password,
+              req.body.role,
             ],
             (error) => {
               //while inserting data, check for errors
@@ -76,15 +113,18 @@ app.post("/sign-up", (req, res) => {
     }
   );
 });
-app.post("/admin", (req,res)=>{
-  con.query("SELECT first_name,second_name,email FROM students", (error,results)=>{
-    if(error){
-      res.status(500).render("error")
-    }else{
-      res.render("admin", {students:results})
+app.post("/admin", (req, res) => {
+  con.query(
+    "SELECT first_name,second_name,email FROM students",
+    (error, results) => {
+      if (error) {
+        res.status(500).render("error");
+      } else {
+        res.render("admin", { students: results });
+      }
     }
-  })
-})
+  );
+});
 //start server and listen to port
 app.listen(3000, () => {
   console.log("Server listening on port");
