@@ -37,6 +37,10 @@
     min-height: 100vh;
     gap: 60px;
 }
+.start{
+    width: 40;
+    height: 30px;
+}
 .bottom-section{
     display: flex;
     justify-content: space-around;
@@ -49,10 +53,32 @@
     padding: 10px 60px;
     gap: 60px;
 }
+hr{
+    width: 95%;
+    margin: 20px;
+    border: 1px solid black;
+}
 /*page two styles*/
+/* .page-two{
+    display: flex;
+    flex-direction: column;
+} */
 .cards{
     display: flex;
-    
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 40px 30px;
+    height: 100vh;
+}
+.each-card{
+    width: 400px;
+    height: 70%;
+    background-color: brown;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
 }
 /*form styling*/
 .signings{
@@ -71,4 +97,18 @@ input{
     display: block;
     width: 80%;
     padding: 10px;
+}
+/*admin view*/
+body{
+    display: flex;
+    flex-direction: column;
+    
+}
+.different-form-input{
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(245, 47, 47);
+}
+#different-form{
+    border: none;
 }

@@ -4,10 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/home.css">
     <title>Admin Page</title>
   </head>
   <body>
-      <%- include('partials/header') %>
+    <%- include('partials/header') %>
     <h2>Admin Page for Teachers</h2>
 
     <table>
@@ -15,7 +16,6 @@
         <th>email</th>
         <th>first_name</th>
         <th>second_name</th>
-        
       </tr>
       <%students.forEach(stud=>{%>
       <tr>
@@ -24,11 +24,12 @@
         <td><%=stud.second_name%></td>
         <td>
           <form
-            action="/sign-up/:<%=stud.student_id%>"
+            action="/deleteuser/<%=stud.email%>"
             style="display: block"
             method="post"
+            id="different-form"
           >
-            <input type="submit" value="Delete" />
+            <input class="different-form-input" type="submit" value="DELETE" />
           </form>
         </td>
       </tr>

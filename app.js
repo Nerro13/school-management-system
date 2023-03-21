@@ -5,7 +5,7 @@ const mysql = require("mysql");
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("puclic"));
-app.use(express.json())
+app.use(express.json());
 app.use(
   session({
     secret: "sern",
@@ -43,25 +43,28 @@ app.get("/sign-in", (req, res) => {
 // let role = con.query("SELECT role FROM students WHERE email = ?", [req.body.email])
 // console.log(role)
 let role = {
-  admin:'admin',
-  student:'student'
-}
+  admin: "admin",
+  student: "student",
+};
 app.post("/sign-in", (req, res) => {
-    con.query("SELECT role FROM students WHERE email = ?", [req.body.email], (error, results)=>{
-    if(error){
-      res.status(500).render("error")
-    }else{
-      console.log((results[0].role))
-      console.log(role.admin)
-      // console.log(role)
-      if(results[0].role===role.admin){
-        res.render("admin")
-      }else{
-        res.render("home")
+  con.query(
+    "SELECT role FROM students WHERE email = ?",
+    [req.body.email],
+    (error, results) => {
+      if (error) {
+        res.status(500).render("error");
+      } else {
+        console.log(results[0].role);
+        console.log(role.admin);
+        // console.log(role)
+        if (results[0].role === role.admin) {
+          res.redirect("/admin");
+        } else {
+          res.render("home");
+        }
       }
     }
-  })
-  
+  );
 });
 app.get("/sign-up", (req, res) => {
   res.render("sign-up");
@@ -113,14 +116,25 @@ app.post("/sign-up", (req, res) => {
     }
   );
 });
-app.post("/admin", (req, res) => {
+let students = "";
+app.get("/admin", (req, res) => {
+  con.query("SELECT * FROM students WHERE role = 'admin'", (error, results) => {
+    if (error) {
+      res.status(500).render("error");
+    } else {
+      res.render("admin", { students: results });
+    }
+  });
+});
+app.post("/deleteuser/:id", (req, res) => {
   con.query(
-    "SELECT first_name,second_name,email FROM students",
-    (error, results) => {
+    "DELETE FROM students WHERE email = ?",
+    [req.params.id],
+    (error) => {
       if (error) {
         res.status(500).render("error");
       } else {
-        res.render("admin", { students: results });
+        res.redirect("/admin");
       }
     }
   );
