@@ -47,24 +47,68 @@ let role = {
   student: "student",
 };
 app.post("/sign-in", (req, res) => {
-  con.query(
-    "SELECT role FROM students WHERE email = ?",
-    [req.body.email],
-    (error, results) => {
-      if (error) {
-        res.status(500).render("error");
-      } else {
-        console.log(results[0].role);
-        console.log(role.admin);
-        // console.log(role)
-        if (results[0].role === role.admin) {
-          res.redirect("/admin");
-        } else {
-          res.render("home");
-        }
+  con.query("SELECT email FROM students WHERE email = ?", [req.body.email], (error,results)=>{
+    if(error){
+      res.status(500).render("error");
+    }else{
+      if(results.length>0){
+        // res.render("sign-in", {error: "EMAIL NOT REGISTERED"});
+         con.query(
+           "SELECT role FROM students WHERE email = ?",
+           [req.body.email],
+           (error, results) => {
+             if (error) {
+               res.status(500).render("error");
+             } else {
+               console.log(results[0].role);
+               console.log(role.admin);
+               // console.log(role)
+               if (results[0].role === role.admin) {
+                 // res.redirect("/admin");
+                 con.query(
+                   "SELECT password FROM students WHERE email = ?",
+                   [req.body.email],
+                   (error, results) => {
+                     if (error) {
+                       res.status(500).render("error");
+                     } else {
+                       if (results[0].password === req.body.password) {
+                         res.redirect("/admin");
+                       } else {
+                         res.render("sign-in", { error: "WRONG PASSWORD" });
+                       }
+                     }
+                   }
+                 );
+               } else {
+                 // res.render("home");
+                 if (results[0].role === role.student) {
+                   con.query(
+                     "SELECT password FROM students WHERE email = ?",
+                     [req.body.email],
+                     (error, results) => {
+                       if (error) {
+                         res.status(500).render("error");
+                       } else {
+                         if (results[0].password === req.body.password) {
+                           res.render("home");
+                         } else {
+                           res.render("sign-in", { error: "WRONG PASSWORD" });
+                         }
+                       }
+                     }
+                   );
+                 }
+               }
+             }
+           }
+         );
+      }else{
+        res.render("sign-in", { error: "EMAIL NOT REGISTERED" });
       }
     }
-  );
+  })
+ 
 });
 app.get("/sign-up", (req, res) => {
   res.render("sign-up");
@@ -110,7 +154,7 @@ app.post("/sign-up", (req, res) => {
           );
         } else {
           // res.render("sign-up", { error: "Passwords do not match" });
-          res.render("sign-up", { error: "Passwords do not match" });
+          res.render("sign-up", { error: "PASSWORDS DO NOT MATCH" });
         }
       }
     }

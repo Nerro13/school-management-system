@@ -112,3 +112,9 @@ body{
 #different-form{
     border: none;
 }
+/*other parts*/
+.header-error{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

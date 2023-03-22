@@ -15,6 +15,12 @@
         <a href="/sign-up">SIGN UP</a>
       </nav>
     </div>
+     <div class="header-error">
+      <h2>Registration Form</h2>
+      <%if(locals.error){%>
+      <p style="color: red"><%=error%></p>
+      <%}%>
+    </div>
     <div class="signings">
       <form action="/sign-in" method="post">
         <label for="email"> Email</label><br />
