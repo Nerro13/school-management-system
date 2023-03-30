@@ -1,3 +1,24 @@
+/*header styles*/
+.top-nav{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+.top-nav nav{
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px;
+}
+.top-nav nav a{
+    text-decoration: none;
+    color: aquamarine;
+}
+.top-nav img{
+    width: 90px;
+    height: 90px;
+}
+/*first page for home page styles*/
 .mid-section{
     display: flex;
     flex-direction: column;
@@ -7,5 +28,52 @@
 .cards{
     display: flex;
     flex-direction: row;
-    
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 16px;
+}
+.each-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 12px;
+    min-height: 300px;
+}
+.each-card img{
+    width: 65%;
+    /* height: 90px; */
+}
+/*sign in and sign up styles*/
+.signings{
+    display: flex;
+    justify-content: center;
+}
+form{
+    border: 1px solid black;
+    padding: 16px;
+    border-radius: 10px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    /* align-items: center; */
+
+}
+input{
+    display: block;
+    padding: 10px;
+    width: 75%;
+}
+
+
+@media screen and (max-width: 600px){
+    .card{
+        width: 100%;
+        display: block;
+        margin: 10px;
+    }
 }
