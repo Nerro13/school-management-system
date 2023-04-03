@@ -13,24 +13,26 @@
 
     <table>
       <tr>
-        <th>email</th>
-        <th>first_name</th>
-        <th>second_name</th>
+        <th>First Name</th>
+        <th>Second Name</th>
+        <th>Email</th>
       </tr>
       <%students.forEach(stud=>{%>
       <tr>
-        <td><%=stud.email%></td>
         <td><%=stud.first_name%></td>
         <td><%=stud.second_name%></td>
+        <td><%=stud.email%></td>
+        <td><button>MORE</button></td>
         <td>
           <form
             action="/deleteuser/<%=stud.email%>"
             style="display: block"
             method="post"
-            id="different-form"
+            id="delete"
           >
             <input class="different-form-input" type="submit" value="DELETE" />
           </form>
+          
         </td>
       </tr>
 

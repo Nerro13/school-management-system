@@ -124,7 +124,7 @@ app.post("/sign-up", (req, res) => {
       //   console.log(results);
       if (results.length > 0) {
         //check for email
-        res.render("sign-up", { error: "Email already registered" }); //if email exists, this it the rendered error
+        res.render("sign-up", { error: "EMAIL ALREADY REGISTERED" }); //if email exists, this it the rendered error
       } else {
         if (req.body.password === req.body.confirm_password) {
           //if email doesnt exist, moves to check password and confirm password

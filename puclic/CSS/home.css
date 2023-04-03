@@ -64,9 +64,26 @@ form{
 
 }
 input{
-    display: block;
+    /* display: block; */
     padding: 10px;
     width: 75%;
+}
+/*delete button form*/
+#delete{
+    border: none;
+    width: max-content;
+    display: flex;
+    flex-direction: row;
+}
+.different-form-button{
+
+}
+/* table styles*/
+table, th, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 0;
+    margin: 0;
 }
 
 
