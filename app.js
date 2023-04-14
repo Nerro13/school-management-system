@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require("express-session");
+const multer = require("multer")
 const app = express();
 const mysql = require("mysql");
 app.set("view engine", "ejs");
@@ -13,7 +14,18 @@ app.use(
     saveUninitialized: true,
   })
 );
-// let teacher = true;
+// multer js code
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, __dirname + "/puclic/images/profiles");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, file.fieldname + "-" + uniqueSuffix);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 //creating connection to database
 const con = mysql.createConnection({
@@ -91,7 +103,7 @@ app.post("/sign-in", (req, res) => {
                          res.status(500).render("error");
                        } else {
                          if (results[0].password === req.body.password) {
-                           res.render("home");
+                           res.render("users" );
                          } else {
                            res.render("sign-in", { error: "WRONG PASSWORD" });
                          }
@@ -115,7 +127,14 @@ app.get("/sign-up", (req, res) => {
 });
 //post route and authentication for sign up page
 // body parser
-app.post("/sign-up", (req, res) => {
+app.post("/sign-up", upload.single("image"), (req, res) => {
+  let fileType = req.file.mimetype.slice(req.file.mimetype.indexOf("/") + 1);
+  const filePath =
+    req.protocol +
+    "://" +
+    req.hostname +
+    "/images/profiles/" +
+    req.file.filename;
   console.log(req.body);
   con.query(
     "SELECT email FROM students WHERE email = ?",
@@ -130,7 +149,7 @@ app.post("/sign-up", (req, res) => {
           //if email doesnt exist, moves to check password and confirm password
           //here the passwords match and it moves to insert data in the database
           con.query(
-            "INSERT INTO students(user_id,first_name,second_name,email,password,role) VALUES(?,?,?,?,?,?)",
+            "INSERT INTO students(user_id,first_name,second_name,email,password,role,image,image_type) VALUES(?,?,?,?,?,?,?,?)",
             [
               req.body.user_id,
               req.body.first_name,
@@ -138,6 +157,8 @@ app.post("/sign-up", (req, res) => {
               req.body.email,
               req.body.password,
               req.body.role,
+              req.file.filename,
+              fileType,
             ],
             (error) => {
               //while inserting data, check for errors
