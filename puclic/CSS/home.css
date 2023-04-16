@@ -85,7 +85,14 @@ table, th, td{
     padding: 0;
     margin: 0;
 }
-
+/*users page for students*/
+#this-one{
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    border: none;
+    margin: 0;
+}
 
 @media screen and (max-width: 600px){
     .card{

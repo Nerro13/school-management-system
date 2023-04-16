@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, file.fieldname + "-" + uniqueSuffix);
+    cb(null, file.fieldname + "-" + uniqueSuffix + "-" + file.originalname);
   },
 });
 
@@ -72,8 +72,8 @@ app.post("/sign-in", (req, res) => {
              if (error) {
                res.status(500).render("error");
              } else {
-               console.log(results[0].role);
-               console.log(role.admin);
+              //  console.log(results[0].role);
+              //  console.log(role.admin);
                // console.log(role)
                if (results[0].role === role.admin) {
                  // res.redirect("/admin");
@@ -96,14 +96,15 @@ app.post("/sign-in", (req, res) => {
                  // res.render("home");
                  if (results[0].role === role.student) {
                    con.query(
-                     "SELECT password FROM students WHERE email = ?",
+                     "SELECT password, image, first_name FROM students WHERE email = ?",
                      [req.body.email],
                      (error, results) => {
+                      console.log(results[0])
                        if (error) {
                          res.status(500).render("error");
                        } else {
                          if (results[0].password === req.body.password) {
-                           res.render("users" );
+                           res.render("users", {stud:results[0]});
                          } else {
                            res.render("sign-in", { error: "WRONG PASSWORD" });
                          }
