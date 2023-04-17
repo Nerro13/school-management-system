@@ -1,6 +1,6 @@
 const express = require("express");
 const session = require("express-session");
-const multer = require("multer")
+const multer = require("multer");
 const app = express();
 const mysql = require("mysql");
 app.set("view engine", "ejs");
@@ -59,69 +59,86 @@ let role = {
   student: "student",
 };
 app.post("/sign-in", (req, res) => {
-  con.query("SELECT email FROM students WHERE email = ?", [req.body.email], (error,results)=>{
-    if(error){
-      res.status(500).render("error");
-    }else{
-      if(results.length>0){
-        // res.render("sign-in", {error: "EMAIL NOT REGISTERED"});
-         con.query(
-           "SELECT role FROM students WHERE email = ?",
-           [req.body.email],
-           (error, results) => {
-             if (error) {
-               res.status(500).render("error");
-             } else {
-              //  console.log(results[0].role);
-              //  console.log(role.admin);
-               // console.log(role)
-               if (results[0].role === role.admin) {
-                 // res.redirect("/admin");
-                 con.query(
-                   "SELECT password FROM students WHERE email = ?",
-                   [req.body.email],
-                   (error, results) => {
-                     if (error) {
-                       res.status(500).render("error");
-                     } else {
-                       if (results[0].password === req.body.password) {
-                         res.redirect("/admin");
-                       } else {
-                         res.render("sign-in", { error: "WRONG PASSWORD" });
-                       }
-                     }
-                   }
-                 );
-               } else {
-                 // res.render("home");
-                 if (results[0].role === role.student) {
-                   con.query(
-                     "SELECT password, image, first_name FROM students WHERE email = ?",
-                     [req.body.email],
-                     (error, results) => {
-                      console.log(results[0])
-                       if (error) {
-                         res.status(500).render("error");
-                       } else {
-                         if (results[0].password === req.body.password) {
-                           res.render("users", {stud:results[0]});
-                         } else {
-                           res.render("sign-in", { error: "WRONG PASSWORD" });
-                         }
-                       }
-                     }
-                   );
-                 }
-               }
-             }
-           }
-         );
-      }else{
-        res.render("sign-in", { error: "EMAIL NOT REGISTERED" });
+  con.query(
+    "SELECT email FROM students WHERE email = ?",
+    [req.body.email],
+    (error, results) => {
+      if (error) {
+        res.status(500).render("error");
+      } else {
+        if (results.length > 0) {
+          // res.render("sign-in", {error: "EMAIL NOT REGISTERED"});
+          con.query(
+            "SELECT role FROM students WHERE email = ?",
+            [req.body.email],
+            (error, results) => {
+              if (error) {
+                res.status(500).render("error");
+              } else {
+                //  console.log(results[0].role);
+                //  console.log(role.admin);
+                // console.log(role)
+                if (results[0].role === role.admin) {
+                  // res.redirect("/admin");
+                  con.query(
+                    "SELECT password FROM students WHERE email = ?",
+                    [req.body.email],
+                    (error, results) => {
+                      if (error) {
+                        res.status(500).render("error");
+                      } else {
+                        if (results[0].password === req.body.password) {
+                          con.query(
+                            "SELECT * FROM students WHERE role = 'student'",
+                            (error, allStudents) => {
+                              console.log(allStudents)
+                              console.log(allStudents[0])
+                              if(error){
+                                res.status(500).render("error");
+                              }else{
+                                res.render("admin", {allStudents})
+
+                              }
+                              // console.log(allStudents);
+                              // res.render("admin", { allStudents });
+                            }
+                          );
+                        } else {
+                          res.render("sign-in", { error: "WRONG PASSWORD" });
+                        }
+                      }
+                    }
+                  );
+                } else {
+                  // res.render("home");
+                  if (results[0].role === role.student) {
+                    con.query(
+                      "SELECT password, image, first_name FROM students WHERE email = ?",
+                      [req.body.email],
+                      (error, results) => {
+                        // console.log(results[0])
+                        if (error) {
+                          res.status(500).render("error");
+                        } else {
+                          if (results[0].password === req.body.password) {
+                            res.render("users", { stud: results[0] });
+                          } else {
+                            res.render("sign-in", { error: "WRONG PASSWORD" });
+                          }
+                        }
+                      }
+                    );
+                  }
+                }
+              }
+            }
+          );
+        } else {
+          res.render("sign-in", { error: "EMAIL NOT REGISTERED" });
+        }
       }
     }
-  })
- 
+  );
 });
 app.get("/sign-up", (req, res) => {
   res.render("sign-up");
@@ -205,8 +222,6 @@ app.post("/deleteuser/:id", (req, res) => {
     }
   );
 });
-
-
 
 //start server and listen to port
 app.listen(3000, () => {

@@ -17,10 +17,10 @@
         <th>Second Name</th>
         <th>Email</th>
       </tr>
-      <%students.forEach(stud=>{%>
+      <%allStudents.forEach(stud=>{%>
       <tr>
         <td><%=stud.first_name%></td>
-        <td><%=stud.second_name%></td>
+        <td><%stud.second_name%></td>
         <td><%=stud.email%></td>
         <td><button>MORE</button></td>
         <td>
