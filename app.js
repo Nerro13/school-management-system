@@ -96,6 +96,7 @@ app.post("/sign-in", (req, res) => {
                               if(error){
                                 res.status(500).render("error");
                               }else{
+                                req.session.email = 
                                 res.render("admin", {allStudents})
 
                               }
@@ -222,6 +223,18 @@ app.post("/deleteuser/:id", (req, res) => {
     }
   );
 });
+app.get("/register", (req, res)=>{
+  res.render("register")
+})
+app.post("/register", (req,res)=>{
+  con.query("INSERT INTO courses (course_code, course_name,category) VALUES (?,?,?)", [req.body.course_code, req.body.course_name, req.body.category], (error)=>{
+    if(error){
+      res.status(500).render("register", {error: "SOMETHING WENT WRONG"})
+    }else{
+      con.query("SELECT * FROM courses WHERE ")
+    }
+  })
+})
 
 //start server and listen to port
 app.listen(3000, () => {

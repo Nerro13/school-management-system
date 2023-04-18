@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/home.css">
+    <title>Registry</title>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <h1>This is the registration page for courses</h1>
+    <main>
+        <form action="post">
+            <label for="course_code">COURSE CODE</label>
+            <input type="number" name="course_code" id="ourse_code"><br>
+
+            <label for="course_name">COURSE NAME</label>
+            <input type="text" name="course_name" id="course_name"><br>
+
+            <label for="categoty">CATEGORY</label>
+            <input type="text" name="category" id="category"><br>
+
+            <input type="submit" value="REGISTER">
+        </form>
+    </main>
+</body>
+</html>
